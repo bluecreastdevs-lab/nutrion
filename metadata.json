@@ -1,0 +1,11 @@
+{
+  "name": "NutriFit AI",
+  "description": "Your AI Coach for a Healthier You - AI-Powered Nutrition, Indian Meal & Fitness Tracker",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
