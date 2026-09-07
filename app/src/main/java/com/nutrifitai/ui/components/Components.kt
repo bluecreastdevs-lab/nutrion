@@ -135,9 +135,7 @@ fun NutriFitBottomNavigation(
         containerColor = CardNavy,
         contentColor = TextLightGray,
         tonalElevation = 8.dp,
-        modifier = Modifier
-            .navigationBarsPadding()
-            .testTag("bottom_nav_bar")
+        modifier = Modifier.testTag("bottom_nav_bar")
     ) {
         val items = listOf(
             Triple(Screen.Home.route, "Home", Icons.Default.Home),
@@ -156,15 +154,17 @@ fun NutriFitBottomNavigation(
                     Icon(
                         imageVector = icon,
                         contentDescription = label,
-                        tint = if (isSelected) EmeraldGreen else TextMuted
+                        tint = if (isSelected) EmeraldGreen else TextMuted,
+                        modifier = Modifier.size(22.dp)
                     )
                 },
                 label = {
                     Text(
                         text = label,
-                        fontSize = 11.sp,
+                        fontSize = 10.5.sp,
                         fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
-                        color = if (isSelected) NeonGreen else TextMuted
+                        color = if (isSelected) NeonGreen else TextMuted,
+                        maxLines = 1
                     )
                 },
                 colors = NavigationBarItemDefaults.colors(
@@ -187,11 +187,11 @@ fun CalorieProgressRing(
     val remaining = (target - consumed).coerceAtLeast(0)
 
     Box(
-        modifier = modifier.size(160.dp),
+        modifier = modifier.size(126.dp),
         contentAlignment = Alignment.Center
     ) {
         Canvas(modifier = Modifier.fillMaxSize()) {
-            val strokeWidth = 14.dp.toPx()
+            val strokeWidth = 11.dp.toPx()
             // Background track
             drawCircle(
                 color = SurfaceNavy,
@@ -215,22 +215,23 @@ fun CalorieProgressRing(
         ) {
             Text(
                 text = "$remaining",
-                style = MaterialTheme.typography.headlineMedium,
+                style = MaterialTheme.typography.titleLarge,
+                fontSize = 22.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = TextWhite
             )
             Text(
-                text = "kcal remaining",
+                text = "kcal left",
                 style = MaterialTheme.typography.bodySmall,
                 color = TextMuted,
-                fontSize = 11.sp
+                fontSize = 10.sp
             )
             Spacer(modifier = Modifier.height(2.dp))
             Text(
-                text = "$consumed / $target kcal",
+                text = "$consumed / $target",
                 style = MaterialTheme.typography.bodySmall,
                 color = NeonGreen,
-                fontSize = 10.sp,
+                fontSize = 9.5.sp,
                 fontWeight = FontWeight.Medium
             )
         }
@@ -259,22 +260,23 @@ fun MacroProgressBar(
                 text = label,
                 style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.SemiBold,
+                fontSize = 11.sp,
                 color = TextWhite
             )
             Text(
                 text = "${consumed.toInt()}/${target.toInt()}$unit",
                 style = MaterialTheme.typography.bodySmall,
                 color = TextMuted,
-                fontSize = 11.sp
+                fontSize = 10.sp
             )
         }
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(3.dp))
         LinearProgressIndicator(
             progress = { animatedProgress },
             modifier = Modifier
                 .fillMaxWidth()
-                .height(6.dp)
-                .clip(RoundedCornerShape(3.dp)),
+                .height(5.dp)
+                .clip(RoundedCornerShape(2.5.dp)),
             color = barColor,
             trackColor = SurfaceNavy
         )

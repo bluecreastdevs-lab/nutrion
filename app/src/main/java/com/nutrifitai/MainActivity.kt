@@ -59,19 +59,27 @@ fun MainAppScreen(viewModel: NutriFitViewModel) {
     val currentRoute = navBackStackEntry?.destination?.route ?: Screen.Home.route
     val uiState by viewModel.uiState.collectAsState()
 
-    // Hide top and bottom bars on scanner, timer, and full-screen experiences
-    val hideBars = currentRoute in listOf(
-        Screen.AiFoodScanner.route,
-        Screen.WorkoutTimer.route,
-        Screen.ScanResult.route
+    // Main tab routes that show the standard top app bar and bottom navigation
+    val isMainTab = currentRoute in listOf(
+        Screen.Home.route,
+        Screen.FoodDiary.route,
+        Screen.AiWorkoutPlan.route,
+        Screen.Progress.route,
+        Screen.AiAssistant.route
     )
 
     Scaffold(
         containerColor = VeryDarkNavy,
         topBar = {
-            if (!hideBars) {
+            if (isMainTab) {
                 NutriFitTopAppBar(
-                    title = "NutriFit AI",
+                    title = when (currentRoute) {
+                        Screen.FoodDiary.route -> "Food Diary"
+                        Screen.AiWorkoutPlan.route -> "Workout Plan"
+                        Screen.Progress.route -> "Analytics & Progress"
+                        Screen.AiAssistant.route -> "AI Nutrition Coach"
+                        else -> "NutriFit AI"
+                    },
                     streakDays = uiState.streakDays,
                     onProfileClick = { navController.navigate(Screen.Profile.route) },
                     onStreakClick = { navController.navigate(Screen.Progress.route) }
@@ -79,7 +87,7 @@ fun MainAppScreen(viewModel: NutriFitViewModel) {
             }
         },
         bottomBar = {
-            if (!hideBars) {
+            if (isMainTab) {
                 NutriFitBottomNavigation(
                     currentRoute = currentRoute,
                     onNavigate = { route ->

@@ -108,8 +108,8 @@ fun AiMealPlannerScreen(
         )
 
         LazyColumn(
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(bottom = 80.dp)
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            contentPadding = PaddingValues(bottom = 20.dp)
         ) {
             items(mealPlan) { (title, meal, macros) ->
                 Card(
@@ -174,9 +174,9 @@ fun AiWorkoutPlanScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(VeryDarkNavy)
-            .padding(horizontal = 16.dp),
-        contentPadding = PaddingValues(top = 12.dp, bottom = 96.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(horizontal = 14.dp),
+        contentPadding = PaddingValues(top = 8.dp, bottom = 20.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         item {
             // Header card
@@ -295,7 +295,7 @@ fun WorkoutTimerScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(VeryDarkNavy)
-            .padding(20.dp),
+            .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceBetween
     ) {
@@ -307,7 +307,7 @@ fun WorkoutTimerScreen(
             IconButton(onClick = { onNavigate(Screen.AiWorkoutPlan.route) }) {
                 Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = TextWhite)
             }
-            Text("Workout Session", style = MaterialTheme.typography.titleMedium, fontWeight = FontWeight.Bold, color = TextWhite)
+            Text("Workout Session", style = MaterialTheme.typography.titleMedium, fontSize = 17.sp, fontWeight = FontWeight.Bold, color = TextWhite)
             IconButton(onClick = { viewModel.resetWorkoutTimer() }) {
                 Icon(Icons.Default.Refresh, contentDescription = "Reset", tint = TextMuted)
             }
@@ -316,7 +316,7 @@ fun WorkoutTimerScreen(
         // Active Exercise Information
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            verticalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             Surface(
                 shape = RoundedCornerShape(12.dp),
@@ -325,16 +325,16 @@ fun WorkoutTimerScreen(
                 Text(
                     text = "Exercise ${curIndex + 1} of ${workout.exercises.size}",
                     color = NeonGreen,
-                    fontSize = 12.sp,
+                    fontSize = 11.5.sp,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                    modifier = Modifier.padding(horizontal = 10.dp, vertical = 5.dp)
                 )
             }
 
             Text(
                 text = currentExercise.name,
-                style = MaterialTheme.typography.displayLarge,
-                fontSize = 28.sp,
+                style = MaterialTheme.typography.titleLarge,
+                fontSize = 24.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = TextWhite
             )
@@ -342,6 +342,7 @@ fun WorkoutTimerScreen(
             Text(
                 text = "${currentExercise.sets} Sets • ${currentExercise.repsOrDuration}",
                 style = MaterialTheme.typography.titleMedium,
+                fontSize = 15.sp,
                 color = EmeraldGreen,
                 fontWeight = FontWeight.Bold
             )
@@ -349,6 +350,7 @@ fun WorkoutTimerScreen(
             Text(
                 text = currentExercise.instruction,
                 style = MaterialTheme.typography.bodyMedium,
+                fontSize = 13.sp,
                 color = TextLightGray
             )
         }
@@ -356,7 +358,7 @@ fun WorkoutTimerScreen(
         // Stopwatch Timer Display
         Box(
             modifier = Modifier
-                .size(200.dp)
+                .size(176.dp)
                 .clip(CircleShape)
                 .background(CardNavy),
             contentAlignment = Alignment.Center
@@ -365,13 +367,13 @@ fun WorkoutTimerScreen(
                 Text(
                     text = formattedTime,
                     style = MaterialTheme.typography.displayLarge,
-                    fontSize = 44.sp,
+                    fontSize = 38.sp,
                     fontWeight = FontWeight.Black,
                     color = TextWhite
                 )
                 Text(
                     text = if (uiState.isWorkoutTimerRunning) "RUNNING" else "PAUSED",
-                    fontSize = 12.sp,
+                    fontSize = 11.sp,
                     fontWeight = FontWeight.Bold,
                     color = if (uiState.isWorkoutTimerRunning) NeonGreen else TextMuted
                 )

@@ -1,5 +1,7 @@
 package com.nutrifitai.ui.screens
 
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -258,11 +260,13 @@ fun ScanResultScreen(
                 Text("No scan result found. Please scan again.", color = TextMuted)
             }
         } else {
+            val resultScroll = rememberScrollState()
             Column(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(padding)
-                    .padding(horizontal = 16.dp),
+                    .verticalScroll(resultScroll)
+                    .padding(horizontal = 16.dp, vertical = 10.dp),
                 verticalArrangement = Arrangement.spacedBy(14.dp)
             ) {
                 // Title card
@@ -348,7 +352,7 @@ fun ScanResultScreen(
                     }
                 }
 
-                Spacer(modifier = Modifier.weight(1f))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 // Log to diary button
                 Button(

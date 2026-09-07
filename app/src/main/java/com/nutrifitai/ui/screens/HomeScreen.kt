@@ -22,6 +22,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.text.style.TextAlign
 import com.nutrifitai.data.local.entity.FoodEntity
 import com.nutrifitai.ui.components.CalorieProgressRing
 import com.nutrifitai.ui.components.MacroProgressBar
@@ -40,9 +42,9 @@ fun HomeScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(VeryDarkNavy)
-            .padding(horizontal = 16.dp),
-        contentPadding = PaddingValues(top = 8.dp, bottom = 96.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(horizontal = 14.dp),
+        contentPadding = PaddingValues(top = 8.dp, bottom = 20.dp),
+        verticalArrangement = Arrangement.spacedBy(14.dp)
     ) {
         // 1. User Greeting
         item {
@@ -55,13 +57,15 @@ fun HomeScreen(
                     Text(
                         text = "Vanakkam, ${uiState.userProfile.name} 👋",
                         style = MaterialTheme.typography.titleLarge,
+                        fontSize = 18.sp,
                         fontWeight = FontWeight.Bold,
                         color = TextWhite
                     )
                     Text(
                         text = "Goal: ${uiState.userProfile.goal.title} • Target: ${uiState.userProfile.targetCalories} kcal",
                         style = MaterialTheme.typography.bodySmall,
-                        color = TextMuted
+                        color = TextMuted,
+                        fontSize = 11.sp
                     )
                 }
             }
@@ -70,14 +74,14 @@ fun HomeScreen(
         // 2. Daily Calorie & Macro Target Card
         item {
             Card(
-                shape = RoundedCornerShape(24.dp),
+                shape = RoundedCornerShape(20.dp),
                 colors = CardDefaults.cardColors(containerColor = CardNavy),
-                elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+                elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .testTag("today_progress_card")
             ) {
-                Column(modifier = Modifier.padding(18.dp)) {
+                Column(modifier = Modifier.padding(14.dp)) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -88,18 +92,20 @@ fun HomeScreen(
                             style = MaterialTheme.typography.bodySmall,
                             fontWeight = FontWeight.Bold,
                             color = NeonGreen,
-                            letterSpacing = 1.sp
+                            fontSize = 10.5.sp,
+                            letterSpacing = 0.8.sp
                         )
                         Text(
                             text = "Diary >",
                             style = MaterialTheme.typography.bodySmall,
                             fontWeight = FontWeight.SemiBold,
                             color = EmeraldGreen,
+                            fontSize = 11.sp,
                             modifier = Modifier.clickable { onNavigate(Screen.FoodDiary.route) }
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -115,8 +121,8 @@ fun HomeScreen(
                         Column(
                             modifier = Modifier
                                 .weight(1f)
-                                .padding(start = 20.dp),
-                            verticalArrangement = Arrangement.spacedBy(12.dp)
+                                .padding(start = 14.dp),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             MacroProgressBar(
                                 label = "Protein",
@@ -152,7 +158,7 @@ fun HomeScreen(
         item {
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(10.dp)
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 QuickActionPill(
                     icon = Icons.Default.Add,
@@ -379,14 +385,16 @@ fun QuickActionPill(
     onClick: () -> Unit
 ) {
     Surface(
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(14.dp),
         color = CardNavy,
         modifier = modifier
-            .height(72.dp)
+            .height(64.dp)
             .clickable { onClick() }
     ) {
         Column(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(horizontal = 4.dp, vertical = 6.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -394,15 +402,18 @@ fun QuickActionPill(
                 imageVector = icon,
                 contentDescription = label,
                 tint = NeonGreen,
-                modifier = Modifier.size(22.dp)
+                modifier = Modifier.size(20.dp)
             )
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(3.dp))
             Text(
                 text = label,
                 style = MaterialTheme.typography.bodySmall,
-                fontWeight = FontWeight.Medium,
+                fontWeight = FontWeight.SemiBold,
                 color = TextWhite,
-                fontSize = 11.sp
+                fontSize = 10.sp,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                textAlign = TextAlign.Center
             )
         }
     }

@@ -38,26 +38,17 @@ fun FoodDiaryScreen(
         uiState.loggedFoods.filter { it.category.equals(selectedCategory, ignoreCase = true) }
     }
 
-    Scaffold(
-        containerColor = VeryDarkNavy,
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { onNavigate(Screen.AddFood.route) },
-                containerColor = EmeraldGreen,
-                contentColor = VeryDarkNavy,
-                modifier = Modifier.testTag("add_food_fab")
-            ) {
-                Icon(Icons.Default.Add, contentDescription = "Add Food")
-            }
-        }
-    ) { padding ->
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(VeryDarkNavy)
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
-                .padding(horizontal = 16.dp)
+                .padding(horizontal = 14.dp)
         ) {
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             // Header summary
             Card(
@@ -68,40 +59,40 @@ fun FoodDiaryScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(horizontal = 12.dp, vertical = 14.dp),
                     horizontalArrangement = Arrangement.SpaceAround
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("Calories", fontSize = 11.sp, color = TextMuted)
-                        Text("${uiState.totalCalories}", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = TextWhite)
-                        Text("kcal", fontSize = 10.sp, color = TextMuted)
+                        Text("Calories", fontSize = 10.5.sp, color = TextMuted)
+                        Text("${uiState.totalCalories}", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = TextWhite)
+                        Text("kcal", fontSize = 9.5.sp, color = TextMuted)
                     }
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("Protein", fontSize = 11.sp, color = TextMuted)
-                        Text("${uiState.totalProtein.toInt()}g", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = MacroProtein)
-                        Text("Target ${uiState.userProfile.targetProtein}g", fontSize = 10.sp, color = TextMuted)
+                        Text("Protein", fontSize = 10.5.sp, color = TextMuted)
+                        Text("${uiState.totalProtein.toInt()}g", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MacroProtein)
+                        Text("Target ${uiState.userProfile.targetProtein}g", fontSize = 9.5.sp, color = TextMuted)
                     }
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("Carbs", fontSize = 11.sp, color = TextMuted)
-                        Text("${uiState.totalCarbs.toInt()}g", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = MacroCarbs)
-                        Text("Target ${uiState.userProfile.targetCarbs}g", fontSize = 10.sp, color = TextMuted)
+                        Text("Carbs", fontSize = 10.5.sp, color = TextMuted)
+                        Text("${uiState.totalCarbs.toInt()}g", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MacroCarbs)
+                        Text("Target ${uiState.userProfile.targetCarbs}g", fontSize = 9.5.sp, color = TextMuted)
                     }
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text("Fat", fontSize = 11.sp, color = TextMuted)
-                        Text("${uiState.totalFat.toInt()}g", fontSize = 18.sp, fontWeight = FontWeight.Bold, color = MacroFat)
-                        Text("Target ${uiState.userProfile.targetFat}g", fontSize = 10.sp, color = TextMuted)
+                        Text("Fat", fontSize = 10.5.sp, color = TextMuted)
+                        Text("${uiState.totalFat.toInt()}g", fontSize = 16.sp, fontWeight = FontWeight.Bold, color = MacroFat)
+                        Text("Target ${uiState.userProfile.targetFat}g", fontSize = 9.5.sp, color = TextMuted)
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(14.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             // Category filter chips
             LazyRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 items(categories) { cat ->
                     val isSelected = selectedCategory == cat
                     Surface(
-                        shape = RoundedCornerShape(20.dp),
+                        shape = RoundedCornerShape(18.dp),
                         color = if (isSelected) EmeraldGreen else SurfaceNavy,
                         modifier = Modifier
                             .clickable { selectedCategory = cat }
@@ -109,38 +100,54 @@ fun FoodDiaryScreen(
                     ) {
                         Text(
                             text = cat,
-                            fontSize = 12.sp,
+                            fontSize = 11.5.sp,
                             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal,
                             color = if (isSelected) VeryDarkNavy else TextLightGray,
-                            modifier = Modifier.padding(horizontal = 14.dp, vertical = 8.dp)
+                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
                         )
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(14.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
             if (filteredFoods.isEmpty()) {
                 Box(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "No items logged in $selectedCategory.",
+                        text = "No items logged in $selectedCategory.\nTap + below to log food!",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = TextMuted
+                        color = TextMuted,
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
                     )
                 }
             } else {
                 LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(10.dp),
-                    contentPadding = PaddingValues(bottom = 90.dp)
+                    modifier = Modifier.weight(1f),
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
+                    contentPadding = PaddingValues(bottom = 72.dp)
                 ) {
                     items(filteredFoods) { food ->
                         MealItemCard(food = food, onDelete = { viewModel.deleteFood(food.id) })
                     }
                 }
             }
+        }
+
+        FloatingActionButton(
+            onClick = { onNavigate(Screen.AddFood.route) },
+            containerColor = EmeraldGreen,
+            contentColor = VeryDarkNavy,
+            modifier = Modifier
+                .align(Alignment.BottomEnd)
+                .padding(16.dp)
+                .testTag("add_food_fab")
+        ) {
+            Icon(Icons.Default.Add, contentDescription = "Add Food")
         }
     }
 }

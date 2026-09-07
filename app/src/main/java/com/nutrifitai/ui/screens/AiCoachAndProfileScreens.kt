@@ -55,38 +55,31 @@ fun AiAssistantScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(VeryDarkNavy)
-            .navigationBarsPadding()
     ) {
-        // App bar
+        // Status bar indicator
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp, vertical = 12.dp),
+                .padding(horizontal = 14.dp, vertical = 6.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(6.dp)
         ) {
             Box(
                 modifier = Modifier
-                    .size(40.dp)
+                    .size(8.dp)
                     .clip(CircleShape)
-                    .background(Brush.linearGradient(listOf(EmeraldGreen, NeonGreen))),
-                contentAlignment = Alignment.Center
-            ) {
-                Icon(Icons.Default.AutoAwesome, contentDescription = null, tint = VeryDarkNavy, modifier = Modifier.size(24.dp))
-            }
-            Column(modifier = Modifier.weight(1f)) {
-                Text("NutriFit AI Nutrition Coach", fontWeight = FontWeight.Bold, color = TextWhite, fontSize = 16.sp)
-                Text(
-                    text = if (uiState.isAiThinking) "Analyzing clinical nutrition..." else "Online • Specialized in Indian Diets",
-                    fontSize = 11.sp,
-                    color = if (uiState.isAiThinking) NeonGreen else TextMuted
-                )
-            }
+                    .background(if (uiState.isAiThinking) Color(0xFFFBBF24) else NeonGreen)
+            )
+            Text(
+                text = if (uiState.isAiThinking) "NutriFit AI is thinking..." else "Online • Specialized in Indian & Tamil Diets",
+                fontSize = 11.5.sp,
+                color = TextMuted
+            )
         }
 
         // Quick question chips
         LazyRow(
-            modifier = Modifier.padding(horizontal = 16.dp, vertical = 4.dp),
+            modifier = Modifier.padding(horizontal = 14.dp, vertical = 4.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             items(quickQuestions) { q ->
@@ -100,8 +93,9 @@ fun AiAssistantScreen(
                     Text(
                         text = q,
                         color = NeonGreen,
-                        fontSize = 12.sp,
-                        modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                        fontSize = 11.5.sp,
+                        fontWeight = FontWeight.Medium,
+                        modifier = Modifier.padding(horizontal = 10.dp, vertical = 6.dp)
                     )
                 }
             }
@@ -113,9 +107,9 @@ fun AiAssistantScreen(
             modifier = Modifier
                 .weight(1f)
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-            contentPadding = PaddingValues(vertical = 12.dp)
+                .padding(horizontal = 14.dp),
+            verticalArrangement = Arrangement.spacedBy(10.dp),
+            contentPadding = PaddingValues(vertical = 8.dp)
         ) {
             items(uiState.aiMessages) { msg ->
                 val isUser = msg.sender == "user"
@@ -125,29 +119,29 @@ fun AiAssistantScreen(
                 ) {
                     Card(
                         shape = RoundedCornerShape(
-                            topStart = 18.dp,
-                            topEnd = 18.dp,
-                            bottomStart = if (isUser) 18.dp else 4.dp,
-                            bottomEnd = if (isUser) 4.dp else 18.dp
+                            topStart = 16.dp,
+                            topEnd = 16.dp,
+                            bottomStart = if (isUser) 16.dp else 4.dp,
+                            bottomEnd = if (isUser) 4.dp else 16.dp
                         ),
                         colors = CardDefaults.cardColors(
                             containerColor = if (isUser) EmeraldGreen else CardNavy
                         ),
-                        modifier = Modifier.widthIn(max = 320.dp)
+                        modifier = Modifier.widthIn(max = 290.dp)
                     ) {
-                        Column(modifier = Modifier.padding(14.dp)) {
+                        Column(modifier = Modifier.padding(12.dp)) {
                             Text(
                                 text = msg.text,
                                 color = if (isUser) VeryDarkNavy else TextWhite,
-                                fontSize = 14.sp,
-                                lineHeight = 20.sp,
+                                fontSize = 13.5.sp,
+                                lineHeight = 19.sp,
                                 fontWeight = if (isUser) FontWeight.Medium else FontWeight.Normal
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
                                 text = msg.timestamp,
                                 color = if (isUser) VeryDarkNavy.copy(alpha = 0.7f) else TextMuted,
-                                fontSize = 10.sp,
+                                fontSize = 9.5.sp,
                                 modifier = Modifier.align(Alignment.End)
                             )
                         }
@@ -156,16 +150,17 @@ fun AiAssistantScreen(
             }
             if (uiState.isAiThinking) {
                 item {
-                    Text("NutriFit AI is preparing nutrition advice...", color = NeonGreen, fontSize = 12.sp)
+                    Text("NutriFit AI is preparing nutrition advice...", color = NeonGreen, fontSize = 11.5.sp)
                 }
             }
         }
 
-        // Message input row
+        // Message input row with IME keyboard padding
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(12.dp),
+                .imePadding()
+                .padding(horizontal = 12.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
@@ -175,7 +170,7 @@ fun AiAssistantScreen(
                 modifier = Modifier
                     .weight(1f)
                     .testTag("ai_chat_input"),
-                placeholder = { Text("Ask about meals, Tamil food, macros...", color = TextMuted, fontSize = 13.sp) },
+                placeholder = { Text("Ask about meals, Tamil food, macros...", color = TextMuted, fontSize = 12.5.sp) },
                 singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = EmeraldGreen,
@@ -185,7 +180,7 @@ fun AiAssistantScreen(
                     focusedContainerColor = CardNavy,
                     unfocusedContainerColor = CardNavy
                 ),
-                shape = RoundedCornerShape(24.dp)
+                shape = RoundedCornerShape(22.dp)
             )
 
             FloatingActionButton(
@@ -199,10 +194,10 @@ fun AiAssistantScreen(
                 containerColor = EmeraldGreen,
                 contentColor = VeryDarkNavy,
                 modifier = Modifier
-                    .size(48.dp)
+                    .size(46.dp)
                     .testTag("send_ai_message_button")
             ) {
-                Icon(Icons.Default.Send, contentDescription = "Send", modifier = Modifier.size(20.dp))
+                Icon(Icons.Default.Send, contentDescription = "Send", modifier = Modifier.size(18.dp))
             }
         }
     }
