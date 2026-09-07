@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">NutriFit AI</string>
+    <string name="tagline">Your AI Coach for a Healthier You</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_diary">Diary</string>
+    <string name="nav_workout">Workout</string>
+    <string name="nav_progress">Progress</string>
+    <string name="nav_coach">AI Coach</string>
+</resources>

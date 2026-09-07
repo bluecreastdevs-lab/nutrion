@@ -1,0 +1,24 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <group
+        android:scaleX="0.61"
+        android:scaleY="0.61"
+        android:translateX="21"
+        android:translateY="21">
+        <!-- Glowing Shield/Leaf Badge -->
+        <path
+            android:fillColor="#10B981"
+            android:pathData="M54,12 C72,12 86,26 86,44 C86,66 54,92 54,92 C54,92 22,66 22,44 C22,26 36,12 54,12 Z" />
+        <!-- Neon Nutrition Leaf / Spark Accent -->
+        <path
+            android:fillColor="#00E676"
+            android:pathData="M54,24 C54,24 68,36 68,52 C68,64 58,74 46,74 C46,74 42,60 48,48 C52,40 54,24 54,24 Z" />
+        <!-- Power Bolt / Pulse Symbol in White -->
+        <path
+            android:fillColor="#FFFFFF"
+            android:pathData="M56,34 L44,52 L52,52 L48,68 L64,48 L56,48 Z" />
+    </group>
+</vector>
